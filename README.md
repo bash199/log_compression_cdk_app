@@ -1,57 +1,45 @@
-# Welcome to your CDK Python project!
+# Log File Upload and Auto-Compression System
 
-This is a blank project for CDK development with Python.
+Aa solution using AWS CDK to facilitate log file uploads, auto-compression, and
+storage.
+It include an API Gateway and Lambda to accept log file content and store in S3 Bucket, another Lambda function to compress the log file, and S3 buckets for both uncompressed and
+compressed log files.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Components
 
-This project is set up like a standard Python project. The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory. To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+-  API Gateway
+-  Lambda Functions
+-  S3 Buckets
 
-To manually create a virtualenv on MacOS and Linux:
+## Purpose of Each Component
 
-```
-$ python -m venv .venv
-```
+-  API Gateway: Receives log file content via HTTP POST requests.
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+-  Lambda Function (Process): Processes the log file content and stores it in an S3 bucket.
 
-```
-$ source .venv/bin/activate
-```
+-  Lambda Function (Compress): Compresses the log file and stores it in another S3 bucket.
 
-If you are a Windows platform, you would activate the virtualenv like this:
+-  S3 Buckets: One for storing uncompressed log files and another for storing compressed log files.
 
-```
-% .venv\Scripts\activate.bat
-```
+## Usage
 
-Once the virtualenv is activated, you can install the required dependencies.
+-  First Configure AWS CLI .
 
-```
-$ pip install -r requirements.txt
-```
+-  grant the needed permissions (AdministratorAccess) if not using root.
 
-At this point you can now synthesize the CloudFormation template for this code.
+-  Bootstarp your cdk toolkit (run cdk bootsrapt account-id/region)
 
-```
-$ cdk synth
-```
+-  Clone the repository.
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
+-  Install dependencies (requirements.txt).
 
-## Useful commands
+-  Deploy the CDK stack (cdk deploy).
 
--  `cdk ls` list all stacks in the app
--  `cdk synth` emits the synthesized CloudFormation template
--  `cdk deploy` deploy this stack to your default AWS account/region
--  `cdk diff` compare deployed stack with current state
--  `cdk docs` open CDK documentation
+-  Use the provided API Gateway endpoint to send HTTP POST requests with log file content.
+
+## Testing
+
+-  Install testing dependencies (requirements-dev.txt).
+-  Run the tests (pytest).
 
 Enjoy!
