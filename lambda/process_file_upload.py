@@ -51,7 +51,7 @@ def handler(event, context):
 
     return {
         "statusCode": 200,
-        "body": json.dumps(f"successfuly uploaded, key: {unique_key}")
+        "body": json.dumps(f"Successfuly uploaded, key: {unique_key}")
     }
 
 
