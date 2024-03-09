@@ -1,15 +1,19 @@
 import aws_cdk as core
 import aws_cdk.assertions as assertions
 
-from log_file_uploadd.log_file_uploadd_stack import LogFileUploaddStack
+from log_file_uploadd.log_file_uploadd_stack import ApiGatewayStack
+from log_file_uploadd.lambda_stack import LambdaStack
 
-# example tests. To run these tests, uncomment this file along with the example
-# resource in log_file_uploadd/log_file_uploadd_stack.py
-def test_sqs_queue_created():
+def test_api_gateway_stack():
     app = core.App()
-    stack = LogFileUploaddStack(app, "log-file-uploadd")
+    lambda_stack = LambdaStack(app, "LambdaStack")
+    stack = ApiGatewayStack(app, "log-file-uploadd", lambda_function=lambda_stack.process_log_file_upload)
     template = assertions.Template.from_stack(stack)
+    template.resource_count_is('AWS::ApiGateway::RestApi', 1)
 
-#     template.has_resource_properties("AWS::SQS::Queue", {
-#         "VisibilityTimeout": 300
-#     })
+def test_lambda_stack():
+    app = core.App()
+    lambda_stack = LambdaStack(app, "LambdaStack")
+    template = assertions.Template.from_stack(lambda_stack)
+    template.resource_count_is('AWS::S3::Bucket', 2)
+    template.resource_count_is('AWS::Lambda::Function', 3)

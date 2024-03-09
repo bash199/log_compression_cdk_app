@@ -5,7 +5,6 @@ from aws_cdk import (
     aws_s3_notifications as s3_notifications
 )
 from constructs import Construct
-import aws_cdk.aws_lambda_event_sources as eventsources
 
 class LambdaStack(Stack):
 
